@@ -10,9 +10,9 @@ name: Java CI with Maven
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "master" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "master" ]
 
 jobs:
   build:
@@ -42,7 +42,7 @@ jobs:
       with:
         path: '**/spotbugsXml.xml'
 
-        
+
 permissions:
      contents: write
      packages: write
