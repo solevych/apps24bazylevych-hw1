@@ -5,7 +5,7 @@ import java.util.Arrays;
 
 
 public class TemperatureSeriesAnalysis {
-
+    private static final double ABSOLUTE_ZERO_CELSIUS = -273;
     private double[] temperatureSeries;
 
     public TemperatureSeriesAnalysis() {
@@ -13,7 +13,7 @@ public class TemperatureSeriesAnalysis {
     }
 
     public TemperatureSeriesAnalysis(double[] temperatureSeries) {
-        double ABSOLUTE_ZERO_CELSIUS = -273;
+        
 
         if (temperatureSeries == null) {
             throw new IllegalArgumentException(
@@ -23,8 +23,8 @@ public class TemperatureSeriesAnalysis {
         for (double temp : temperatureSeries) {
             if (temp < ABSOLUTE_ZERO_CELSIUS) {
                 throw new IllegalArgumentException(
-                    "Temperature series contains values"+
-                    "below absolute zero (-273°C)");
+                    "Temperature series contains values"
+                    +"below absolute zero (-273°C)");
             }
         }
 
@@ -33,10 +33,12 @@ public class TemperatureSeriesAnalysis {
 
     public double average() {
         if (this.temperatureSeries == null) {
-            throw new IllegalArgumentException("Temperature series cannot be null");
+            throw new IllegalArgumentException(
+                "Temperature series cannot be null");
         }
         if (this.temperatureSeries.length == 0) {
-            throw new IllegalArgumentException("Temperature series cannot be empty");
+            throw new IllegalArgumentException(
+                "Temperature series cannot be empty");
         }
         double sum = 0;
         for (double temp : this.temperatureSeries) {
@@ -47,7 +49,8 @@ public class TemperatureSeriesAnalysis {
 
     public double deviation() {
         if (this.temperatureSeries == null) {
-            throw new IllegalArgumentException("Temperature series cannot be null");
+            throw new IllegalArgumentException(
+                "Temperature series cannot be null");
         }
         double deviation = 0;
         for (double temp : this.temperatureSeries) {
@@ -62,10 +65,11 @@ public class TemperatureSeriesAnalysis {
 
     public double min() {
         if (this.temperatureSeries == null) {
-            throw new IllegalArgumentException("Temperature series cannot be null");
+            throw new IllegalArgumentException(
+                "Temperature series cannot be null");
         }
         double minValue = this.temperatureSeries[0];
-        for (double temp : this.temperatureSeries){
+        for (double temp : this.temperatureSeries) {
             if (minValue >= temp) {
                 minValue = temp;
             }
@@ -75,10 +79,11 @@ public class TemperatureSeriesAnalysis {
 
     public double max() {
         if (this.temperatureSeries == null) {
-            throw new IllegalArgumentException("Temperature series cannot be null");
+            throw new IllegalArgumentException(
+                "Temperature series cannot be null");
         }
         double maxValue = this.temperatureSeries[0];
-        for (double temp : this.temperatureSeries){
+        for (double temp : this.temperatureSeries) {
             if (maxValue <= temp) {
                 maxValue = temp;
             }
@@ -88,7 +93,8 @@ public class TemperatureSeriesAnalysis {
 
     public double findTempClosestToZero() {
         if (this.temperatureSeries == null) {
-            throw new IllegalArgumentException("Temperature series cannot be null");
+            throw new IllegalArgumentException(
+                "Temperature series cannot be null");
         }
         double minValue = Math.abs(this.temperatureSeries[0]);
         for (double temp : this.temperatureSeries) {
@@ -102,11 +108,12 @@ public class TemperatureSeriesAnalysis {
 
     public double findTempClosestToValue(double tempValue) {
         if (this.temperatureSeries == null) {
-            throw new IllegalArgumentException("Temperature series cannot be null");
+            throw new IllegalArgumentException(
+                "Temperature series cannot be null");
         }
         double tempClosestToValue = this.temperatureSeries[0];
         double difference = Math.abs(tempValue - this.temperatureSeries[0]);
-        for (double temp : this.temperatureSeries){
+        for (double temp : this.temperatureSeries) {
             
             if (difference >=  Math.abs(tempValue - temp)) {
                 difference =  Math.abs(tempValue - temp);
@@ -142,7 +149,7 @@ public class TemperatureSeriesAnalysis {
     public double[] findTempsGreaterThen(double tempValue) {
        
         int count = 0;
-        for (double temp : this.temperatureSeries){
+        for (double temp : this.temperatureSeries) {
             
             if (temp > tempValue) {
                 count++;
@@ -164,7 +171,7 @@ public class TemperatureSeriesAnalysis {
     public double[] findTempsInRange(double lowerBound, double upperBound) {
         int count = 0;
         
-        for (double temp : this.temperatureSeries){
+        for (double temp : this.temperatureSeries) {
             
             if (temp > lowerBound && temp < upperBound) {
                 count++;
@@ -173,7 +180,7 @@ public class TemperatureSeriesAnalysis {
         
         double[] resultArray = new double[count];
         int index = 0;
-        for (double temp : this.temperatureSeries){
+        for (double temp : this.temperatureSeries) {
             
             if (temp > lowerBound && temp < upperBound) {
                 resultArray[index] = temp;
@@ -188,7 +195,9 @@ public class TemperatureSeriesAnalysis {
         this.temperatureSeries = new double[0];
     }
     public double[] sortTemps() {
-        double[] sortedArray = Arrays.copyOf(temperatureSeries, temperatureSeries.length);
+        double[] sortedArray = Arrays.copyOf(
+            temperatureSeries, 
+            temperatureSeries.length);
         Arrays.sort(sortedArray);
         return sortedArray;
     }
@@ -205,14 +214,22 @@ public class TemperatureSeriesAnalysis {
 
         int requiredSize = temperatureSeries.length + temps.length;
         if (requiredSize > temperatureSeries.length) {
-            double[] newArray = new double[Math.max(temperatureSeries.length * 2, requiredSize)];
-            System.arraycopy(temperatureSeries, 0, newArray, 0, temperatureSeries.length);
+            double[] newArray = new double[Math.max(
+                temperatureSeries.length * 2, 
+                requiredSize
+                )];
+            System.arraycopy(temperatureSeries, 
+                            0, 
+                            newArray, 
+                            0, 
+                            temperatureSeries.length);
             temperatureSeries = newArray;
         }
 
 
         for (int i = 0; i < temps.length; i++) {
-            temperatureSeries[temperatureSeries.length - temps.length + i] = temps[i];
+            temperatureSeries[temperatureSeries.length - temps.length + i]
+             = temps[i];
         }
 
         return temperatureSeries.length;
