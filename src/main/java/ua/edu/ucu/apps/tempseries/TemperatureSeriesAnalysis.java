@@ -101,11 +101,13 @@ public class TemperatureSeriesAnalysis {
         if (this.temperatureSeries == null) {
             throw new IllegalArgumentException("Temperature series cannot be null");
         }
-        double tempClosestToValue = Math.abs(tempValue - this.temperatureSeries[0]);
+        double tempClosestToValue = this.temperatureSeries[0];
+        double difference = Math.abs(tempValue - this.temperatureSeries[0]);
         for (double temp : this.temperatureSeries){
             
-            if (tempClosestToValue >= tempValue - temp){
-                tempClosestToValue = tempValue - temp;
+            if (difference >=  Math.abs(tempValue - temp)){
+                difference =  Math.abs(tempValue - temp);
+                tempClosestToValue = temp;
             }
         }
     

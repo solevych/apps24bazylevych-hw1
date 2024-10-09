@@ -1,7 +1,12 @@
 package ua.edu.ucu.tempseries;
 
 import static org.junit.Assert.*;
+
+import java.util.Arrays;
+
 import org.junit.Test;
+
+import ua.edu.ucu.apps.tempseries.TempSummaryStatistics;
 import ua.edu.ucu.apps.tempseries.TemperatureSeriesAnalysis;
 
 public class TemperatureSeriesAnalysisTest {
@@ -112,6 +117,64 @@ public void testFindTempsInRange() {
     assertArrayEquals(expResult, actualResult, 0.00001);
 }
 
+@Test(expected = IllegalArgumentException.class)
+public void testConstructorWithNullArray() {
+    new TemperatureSeriesAnalysis(null);
+}
+
+@Test(expected = IllegalArgumentException.class)
+public void testConstructorWithTempBelowAbsoluteZero() {
+    double[] temperatureSeries = {-274.0};
+    new TemperatureSeriesAnalysis(temperatureSeries);
+}
+
+@Test
+public void testFindTempClosestToZero() {
+    double[] temperatureSeries = {10, 3.0, -2.0, -1.0, 1.0};
+    TemperatureSeriesAnalysis seriesAnalysis = new TemperatureSeriesAnalysis(temperatureSeries);
+    double expResult = 1.0; // Closest to zero
+    double actualResult = seriesAnalysis.findTempClosestToZero();
+    assertEquals(expResult, actualResult, 0.00001);
+}
+
+@Test
+public void testFindTempClosestToValue() {
+    double[] temperatureSeries = {10.0, 15.0, 20.0};
+    TemperatureSeriesAnalysis seriesAnalysis = new TemperatureSeriesAnalysis(temperatureSeries);
+    double expResult = 15.0; // Closest to 14.0
+    double actualResult = seriesAnalysis.findTempClosestToValue(14.0);
+    assertEquals(expResult, actualResult, 0.00001);
+}
+
+@Test
+public void testAddTemps() {
+    double[] temperatureSeries = {1.0, 2.0};
+    TemperatureSeriesAnalysis seriesAnalysis = new TemperatureSeriesAnalysis(temperatureSeries);
+    int newSize = seriesAnalysis.addTemps(3.0, 4.0);
+
+    double[] expectedArray = {1.0, 2.0, 3.0, 4.0};
+    assertEquals(expectedArray.length, newSize);
+    assertArrayEquals(expectedArray, Arrays.copyOf(seriesAnalysis.sortTemps(), newSize), 0.00001);
+}
+
+@Test
+public void testReset() {
+    double[] temperatureSeries = {1.0, 2.0};
+    TemperatureSeriesAnalysis seriesAnalysis = new TemperatureSeriesAnalysis(temperatureSeries);
+    seriesAnalysis.reset();
+
+    double[] expectedArray = {};
+    assertArrayEquals(expectedArray, seriesAnalysis.sortTemps(), 0.00001);
+}
+
+@Test
+public void testSummaryStatistics() {
+    double[] temperatureSeries = {1.0, 2.0, 3.0, 4.0};
+    TemperatureSeriesAnalysis seriesAnalysis = new TemperatureSeriesAnalysis(temperatureSeries);
+
+    TempSummaryStatistics stats = seriesAnalysis.summaryStatistics();
+
+}
 
    
     
